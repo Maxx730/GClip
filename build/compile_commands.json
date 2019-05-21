@@ -1,0 +1,22 @@
+[
+  {
+    "directory": "/home/john/Projects/GClip/build",
+    "command": "valac -C --debug --debug --pkg glib-2.0 --pkg sqlite3 --pkg gtk+-3.0 --color=always --directory Clipboard@exe --basedir ../ --gresources=../ui/resources.xml --gresources ../ui/resources.xml --target-glib=2.38 ../src/App.vala ../src/MainWindow.vala",
+    "file": "../src/App.vala"
+  },
+  {
+    "directory": "/home/john/Projects/GClip/build",
+    "command": "cc -IClipboard@exe -I. -I.. -Iui -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -g -pthread  -MD -MQ 'Clipboard@exe/meson-generated_.._ui_resources.c.o' -MF 'Clipboard@exe/meson-generated_.._ui_resources.c.o.d' -o 'Clipboard@exe/meson-generated_.._ui_resources.c.o' -c ui/resources.c",
+    "file": "ui/resources.c"
+  },
+  {
+    "directory": "/home/john/Projects/GClip/build",
+    "command": "cc -IClipboard@exe -I. -I.. -Iui -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -w -g -pthread  -MD -MQ 'Clipboard@exe/meson-generated_src_App.c.o' -MF 'Clipboard@exe/meson-generated_src_App.c.o.d' -o 'Clipboard@exe/meson-generated_src_App.c.o' -c 'Clipboard@exe/src/App.c'",
+    "file": "Clipboard@exe/src/App.c"
+  },
+  {
+    "directory": "/home/john/Projects/GClip/build",
+    "command": "cc -IClipboard@exe -I. -I.. -Iui -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -w -g -pthread  -MD -MQ 'Clipboard@exe/meson-generated_src_MainWindow.c.o' -MF 'Clipboard@exe/meson-generated_src_MainWindow.c.o.d' -o 'Clipboard@exe/meson-generated_src_MainWindow.c.o' -c 'Clipboard@exe/src/MainWindow.c'",
+    "file": "Clipboard@exe/src/MainWindow.c"
+  }
+]

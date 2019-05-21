@@ -1,0 +1,128 @@
+[GtkTemplate (ui = "/org/gnome/vala-starter/main-window.ui")]
+public class Starter.MainWindow : Gtk.ApplicationWindow {
+
+	//Create out application service classes.
+	private NotificationService notification;
+	private ClipboardService clipboard;
+	private PreferenceService preferences;
+	private DataService database;
+
+	public MainWindow(){
+		print("INITIALIZED MAIN WINDOW\n");
+
+		notification = new NotificationService();
+		preferences = new PreferenceService();
+		database = new DataService();
+
+		database.callback_event.connect((val) => {
+			notification.CreateNotification("Database Created","GClipboard databased created!");
+			//Next we are going to want to set the initial-run preference to true,
+			//since the database has now been created.
+			preferences.SetBoolPref("initial-run",true);
+		});
+
+		//Check if this is the first time running the application, if so
+		//we are going to want to create the SQLite database to store the clip data.
+		if(!preferences.CheckBoolPref("initial-run")) {
+			//Alert the user that the database is going to be created.
+			database.CreateDatabase();
+		}
+	}
+
+	//Class that handles displaying notifications
+	//when something is copied etc.
+	public class NotificationService {
+		private GLib.Notification notif;
+
+	    public NotificationService() {
+	        print("INITIALIZED NOTIFICATION SERVICE\n");
+	    }
+
+	    //Sends a sample notification for testing purposes.
+	    public void SampleNotification(){
+	        notif = new GLib.Notification("Sample Notification");
+	        notif.set_body("This is a sample notification!");
+	        GLib.Application.get_default().send_notification(null,notif);
+	    }
+
+	    //Creates a new notification with a given title,icon and description.
+	    public void CreateNotification(string title,string description) {
+	        notif = new GLib.Notification(title);
+	        notif.set_body(description);
+	        GLib.Application.get_default().send_notification(null,notif);
+	    }
+	}
+
+	//Class that handles listening to the clipboard.
+	public class ClipboardService {
+		private Gtk.Clipboard clipboard;
+
+		public ClipboardService() {
+		    print("INITIALIZED CLIPBOARD SERVICE\n");
+
+	        clipboard = Gtk.Clipboard.get_for_display(Gdk.Display.get_default(),Gdk.SELECTION_PRIMARY);
+	        clipboard.owner_change.connect((e) => {
+	                print("CLIPBOARD UPDATED\n");
+	        });
+		}
+	}
+
+		//Class that handles writing and reading data from the SQLite database.
+		public class DataService {
+			private Sqlite.Database database = null;
+			private string errmsg;
+
+			//Signals are created here.
+			public signal void callback_event(bool value);
+
+		    public DataService() {
+		        print("INITIALIZED DATA SERVICE\n");
+
+				int ec = Sqlite.Database.open("gclipboard-database.db",out database);
+
+		        if(ec != Sqlite.OK) {
+					print("ERROR OPENING DATABASE\n");
+				}
+		    }
+
+			//Method that creates the actual table in the database,
+			//should only be run once when the application is first openend.
+		    public void CreateDatabase(){
+				if(database != null){
+				    string query = "CREATE TABLE clips (
+				        id INTEGER PRIMARY KEY NOT NULL,
+				        value TEXT NOT NULL,
+				        date TEXT NOT NULL
+				    )";
+
+				    var ec = database.exec ( query,null,out errmsg );
+
+				    if ( ec != Sqlite.OK ) {
+				        print ( "ERROR CREATING DATABASE\n" );
+				    } else {
+				        print( "CREATED TABLE SUCCESSFULLY\n" );
+				        callback_event(true);
+				    }
+				}
+		    }
+		}
+
+	//Class that handles saving and reading preferences.
+	public class PreferenceService {
+		private GLib.Settings settings;
+
+		public PreferenceService() {
+		    print("INITIALIZED PREFERENCES SERVICE\n");
+			settings = new GLib.Settings("com.github.maxx730.gclipboard");
+	    }
+
+	    //Returns the value of a boolean preference;
+	    public bool CheckBoolPref(string name) {
+	        return settings.get_boolean(name);
+	    }
+
+	    public void SetBoolPref(string name,bool value) {
+	        settings.set_boolean(name,value);
+	    }
+	}
+}
